@@ -9,6 +9,7 @@ import { Card } from '@/components/ui/Card';
 import { AqiGauge } from '@/components/ui/AqiGauge';
 import { CardSkeleton } from '@/components/ui/Skeleton';
 import { HourlyChart, DailyChart } from '@/components/charts/Charts';
+import { AqiCanvas } from '@/components/AqiCanvas';
 import { useAuth } from '@/context/AuthContext';
 import { getCityAqi, generateHourlySeries, generateHistoricalSeries, aqiLabel, aqiColor, aqiCategory } from '@/lib/aqi';
 import { generateAdvisories } from '@/lib/advisory';
@@ -58,6 +59,17 @@ export const DashboardHome = () => {
           <span className="text-sm text-soft">{new Date().toLocaleDateString([], { weekday: 'long', month: 'short', day: 'numeric' })}</span>
         </div>
       </motion.div>
+
+      {/* Animated AQI hero banner */}
+      {!loading && (
+        <motion.div
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.1 }}
+        >
+          <AqiCanvas aqi={aqi} city="New Delhi" className="h-64 sm:h-72" />
+        </motion.div>
+      )}
 
       {/* Quick actions */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
